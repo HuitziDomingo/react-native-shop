@@ -2,8 +2,13 @@ import { useWindowDimensions } from "react-native"
 import { Input, Layout, Text, Button } from "@ui-kitten/components"
 import { ScrollView } from "react-native-gesture-handler"
 import { MyIcon } from "../../components/ui/MyIcon"
+import { StackScreenProps } from "@react-navigation/stack"
+import { RootStackParams } from "../../routes/StackNavigator"
 
-export default function LoginScreen() {
+
+interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { }
+
+export default function LoginScreen({ navigation }: Props) {
 
   const { height, width } = useWindowDimensions()
 
@@ -21,14 +26,14 @@ export default function LoginScreen() {
             keyboardType="email-address"
             autoCapitalize="none"
             style={{ marginBottom: 10 }}
-            accessoryLeft={<MyIcon name="email-outline"/>}
-            />
+            accessoryLeft={<MyIcon name="email-outline" />}
+          />
           <Input
             placeholder="Clave"
             keyboardType="email-address"
             secureTextEntry
             style={{ marginBottom: 10 }}
-            accessoryLeft={<MyIcon name="lock-outline"/>}
+            accessoryLeft={<MyIcon name="lock-outline" />}
           />
         </Layout>
         {/* Espacio */}
@@ -50,7 +55,7 @@ export default function LoginScreen() {
           <Text
             status="primary"
             category="s1"
-            onPress={() => { }}
+            onPress={() => { navigation.navigate('RegisterScreen')}}
           >
             Crear  cuenta.
           </Text>
