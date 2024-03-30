@@ -1,6 +1,7 @@
 import { useWindowDimensions } from "react-native"
 import { Input, Layout, Text, Button } from "@ui-kitten/components"
 import { ScrollView } from "react-native-gesture-handler"
+import { MyIcon } from "../../components/ui/MyIcon"
 
 export default function LoginScreen() {
 
@@ -20,12 +21,14 @@ export default function LoginScreen() {
             keyboardType="email-address"
             autoCapitalize="none"
             style={{ marginBottom: 10 }}
-          />
+            accessoryLeft={<MyIcon name="email-outline"/>}
+            />
           <Input
             placeholder="Clave"
             keyboardType="email-address"
             secureTextEntry
             style={{ marginBottom: 10 }}
+            accessoryLeft={<MyIcon name="lock-outline"/>}
           />
         </Layout>
         {/* Espacio */}
@@ -35,6 +38,7 @@ export default function LoginScreen() {
           <Button
             onPress={() => { }}
             appearance="ghost"
+            accessoryRight={<MyIcon name="arrow-forward-outline" />}
           >
             Ingresar
           </Button>
