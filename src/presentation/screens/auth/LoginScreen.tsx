@@ -1,19 +1,38 @@
-import { useWindowDimensions } from "react-native"
+import { Alert, useWindowDimensions } from "react-native"
 import { Input, Layout, Text, Button } from "@ui-kitten/components"
 import { ScrollView } from "react-native-gesture-handler"
 import { MyIcon } from "../../components/ui/MyIcon"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParams } from "../../routes/StackNavigator"
 import { API_URL, STAGE } from "@env"
+import { useState } from "react"
+import { useAuthStore } from "../../store/store/useAuthStore"
 
 
 interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { }
 
 export default function LoginScreen({ navigation }: Props) {
 
-  const { height, width } = useWindowDimensions()
+  const { height } = useWindowDimensions()
+  const { login } = useAuthStore()
+  const [isLoding, setIsLoding] = useState<boolean>(false)
+  const [form, setForm] = useState<{ email: string, password: string }>({
+    email: '',
+    password: '',
+  })
 
-  console.log({ apiUrl: API_URL, stage: STAGE })
+  const onLogin = async () => {
+    if (form.email.length === 0 || form.password.length === 0) 
+      Alert.alert('Error', 'Se deben llenar ambos campos')
+    
+    setIsLoding(true)
+    let succes = await login(form.email, form.password)
+    setIsLoding(false)
+    if (succes)
+      return
+    else
+      Alert.alert('Error', 'Usuario o clave incorrectos')
+  }
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -30,23 +49,29 @@ export default function LoginScreen({ navigation }: Props) {
             autoCapitalize="none"
             style={{ marginBottom: 10 }}
             accessoryLeft={<MyIcon name="email-outline" />}
+            value={form.email}
+            onChangeText={(email) => { setForm({ ...form, email }) }}
           />
           <Input
             placeholder="Clave"
-            keyboardType="email-address"
             secureTextEntry
             style={{ marginBottom: 10 }}
             accessoryLeft={<MyIcon name="lock-outline" />}
+            value={form.password}
+            onChangeText={(password) => { setForm({ ...form, password }) }}
           />
         </Layout>
+        {/* <Text>{JSON.stringify(form, null, 2)}</Text> */}
+
         {/* Espacio */}
         <Layout style={{ height: 20 }} />
         {/* Boton de Submit */}
         <Layout>
           <Button
-            onPress={() => { }}
+            onPress={onLogin}
             appearance="ghost"
             accessoryRight={<MyIcon name="arrow-forward-outline" />}
+            disabled={isLoding}
           >
             Ingresar
           </Button>
