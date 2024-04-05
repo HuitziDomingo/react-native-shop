@@ -4,7 +4,6 @@ import { ScrollView } from "react-native-gesture-handler"
 import { MyIcon } from "../../components/ui/MyIcon"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParams } from "../../routes/StackNavigator"
-import { API_URL, STAGE } from "@env"
 import { useState } from "react"
 import { useAuthStore } from "../../store/store/useAuthStore"
 
@@ -22,14 +21,14 @@ export default function LoginScreen({ navigation }: Props) {
   })
 
   const onLogin = async () => {
-    if (form.email.length === 0 || form.password.length === 0) 
+    if (form.email.length === 0 || form.password.length === 0)
       Alert.alert('Error', 'Se deben llenar ambos campos')
-    
+
     setIsLoding(true)
     let succes = await login(form.email, form.password)
     setIsLoding(false)
     if (succes)
-      return
+      Alert.alert('Sucess', 'Todo correcto')
     else
       Alert.alert('Error', 'Usuario o clave incorrectos')
   }
