@@ -19,7 +19,6 @@ const returnUserToken = (data: AuthResponse) => {
 }
 
 
-
 export const authLogin = async (email: string, password: string) => {
     email.toLowerCase()
     try {
@@ -27,6 +26,17 @@ export const authLogin = async (email: string, password: string) => {
             email,
             password,
         })
+        return returnUserToken(data)
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+
+export const authCheckStatus = async () => {
+    try {
+        let { data } = await tesloApi.get<AuthResponse>('/auth/auth/check-status')
         return returnUserToken(data)
     } catch (error) {
         console.log(error)
