@@ -1,8 +1,9 @@
-import { Text, View } from "react-native"
+import { Layout, Spinner } from "@ui-kitten/components";
+
 export default function LoadingScreen() {
     return (
-        <View>
-            <Text>Loading Screen</Text>
-        </View>
+       <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Spinner status="primary" size="large" />
+       </Layout>
     )
 }

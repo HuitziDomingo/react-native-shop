@@ -6,6 +6,7 @@ import * as eva from '@eva-design/eva'
 import { NavigationContainer } from "@react-navigation/native"
 import StacKNavigator from './presentation/routes/StackNavigator'
 import { useColorScheme } from 'react-native'
+import AuthProvider from './presentation/providers/AuthProvider';
 
 
 
@@ -31,7 +32,9 @@ export default function ProductsApp() {
                         notification: theme['color-primary-500']
                     },
                 }}>
-                    <StacKNavigator />
+                    <AuthProvider>
+                        <StacKNavigator />
+                    </AuthProvider>
                 </NavigationContainer>
             </ApplicationProvider>
         </>
